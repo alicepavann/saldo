@@ -1,0 +1,216 @@
+@import "tailwindcss";
+
+/*
+ * saldo. — identidade v2
+ * Preto quente (não azulado), tinta cor de papel, rosa como acento
+ * e um vinho escuro para preenchimentos. Serifa editorial para números
+ * e títulos; Geist para a interface. Textura de grão bem leve no fundo.
+ */
+:root {
+  --bg: #0d0b0c;
+  --surface: #141113;
+  --surface-2: #1b1719;
+  --surface-3: #241f21;
+  --line: #262022;
+  --line-strong: #352d30;
+  --ink: #f2ece9;
+  --ink-2: #bdb2ae;
+  --ink-3: #85797b;
+  --ink-4: #54494c;
+
+  --rose: #f06a93;
+  --rose-strong: #ff86a9;
+  --rose-ink: #f8cdd9;
+  --rose-soft: rgba(240, 106, 147, 0.11);
+  --rose-line: rgba(240, 106, 147, 0.3);
+  --wine: #5c1a33;
+
+  --pos: #9cc9a6;
+  --warn: #e2b266;
+  --neg: #ee7e6f;
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-rose: var(--rose);
+  --color-rose-strong: var(--rose-strong);
+  --color-rose-ink: var(--rose-ink);
+  --color-rose-soft: var(--rose-soft);
+  --color-rose-line: var(--rose-line);
+  --color-wine: var(--wine);
+  --color-pos: var(--pos);
+  --color-warn: var(--warn);
+  --color-neg: var(--neg);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+
+  --radius-card: 18px;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01";
+}
+
+/* Grão: textura quase invisível que tira o "chapado" do digital. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+::selection {
+  background: var(--rose-soft);
+  color: var(--rose-ink);
+}
+
+:focus-visible {
+  outline: 1.5px solid var(--rose);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* Serifa editorial: títulos e números grandes. */
+.display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+/* Rótulo: discreto, em caixa normal. */
+.label {
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--ink-3);
+}
+
+/* Módulo: fundo um tom acima, sem borda dura. */
+.card {
+  background: var(--surface);
+  border: 1px solid transparent;
+  border-radius: var(--radius-card);
+  box-shadow: inset 0 0 0 1px rgba(255, 240, 240, 0.035);
+}
+
+/* Linha fina usada para separar blocos sem caixas. */
+.rule {
+  border-color: var(--line);
+}
+
+/* Link de dado: número/linha que leva para os detalhes. */
+.explore {
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.15s, color 0.15s;
+}
+.explore:hover {
+  background: var(--surface-2);
+}
+
+/* Sublinhado editorial para palavras clicáveis em frases. */
+.ink-link {
+  text-decoration: underline;
+  text-decoration-color: var(--rose-line);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.15s, color 0.15s;
+}
+.ink-link:hover {
+  color: var(--rose-ink);
+  text-decoration-color: var(--rose);
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.recharts-wrapper *:focus {
+  outline: none;
+}
+.recharts-bar-rectangle {
+  cursor: pointer;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-in {
+  animation: fade-up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Para elementos posicionados com transform (diálogos): só opacidade. */
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fade-in {
+  animation: fade 0.18s ease-out both;
+}
+
+.stagger > * {
+  animation: fade-up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.stagger > *:nth-child(2) { animation-delay: 50ms; }
+.stagger > *:nth-child(3) { animation-delay: 100ms; }
+.stagger > *:nth-child(4) { animation-delay: 150ms; }
+.stagger > *:nth-child(5) { animation-delay: 200ms; }
+.stagger > *:nth-child(6) { animation-delay: 250ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-in,
+  .fade-in,
+  .stagger > * {
+    animation: none;
+  }
+}
